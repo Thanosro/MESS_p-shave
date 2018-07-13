@@ -3,7 +3,7 @@ cd C:\Users\Thanos\Documents\DeepSolar\BigData\sims
 rmpath('C:\Users\Thanos\Documents\DeepSolar\Optimal_flow\cvx\lib\narginchk_')
 %% Laptop
 addpath(genpath('C:\Users\thano\OneDrive\Documents\USC'))
-cd C:\Users\thano\OneDrive\Documents\USC\DeepSolar\sustech\MESS-optimization-master\MESS-optimization
+cd C:\Users\thano\OneDrive\Documents\USC\DeepSolar\BigData\MESS_p-shave
 rmpath('C:\Users\thano\OneDrive\Documents\USC\DeepSolar\OPF\cvx\lib\narginchk_')
 %% load the array 
 clc; clear all;

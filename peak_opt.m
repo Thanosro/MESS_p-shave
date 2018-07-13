@@ -5,7 +5,7 @@ p_peak = 12/30;
 % Energy capacity kWh
 E_cap = 200;
 % energy initial storage
-E_init = 30;
+E_init = 0;
 % Power Capacity kW
 P_max = 100;
 % Time resolution is the length of the load array 
@@ -52,7 +52,7 @@ figure(234)
    xticks(0:12:96)
    xticklabels(0:3:24)
    xlabel('Time (hours)')
-   legend('Load','Thres','Shaved','Location','Northwest')
+   legend('Load','Threshold','Shaved','Location','Northwest')
 % end
 %%
 cvx_begin %quiet
