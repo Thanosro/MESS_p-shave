@@ -39,7 +39,7 @@ assert(time_step >= 1 && mod(96,time_step) == 0,'Time step not divided by the nu
 avg_cons = mean(reshape(Lt_day,4*time_step,[]));
 avg_cons_rep = repelem(avg_cons,4*time_step);
    %%
-   close all;
+%    close all;
    Lt_plot = L_t_ar(96*cl_num:96*(cl_num+1)-1);
    % find the mean of the 10 max elements from the L_t_plot array
    max(Lt_plot);
@@ -48,7 +48,7 @@ avg_cons_rep = repelem(avg_cons,4*time_step);
    figure(131)
    Lt_day = scaling_factor*Lt_plot;
    hold on
-   plot(avg_cons_rep,'r')
+%    plot(avg_cons_rep,'r')
    hold on
    plot(Lt_day,'b')
    hold on;
