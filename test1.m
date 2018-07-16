@@ -1,5 +1,5 @@
 addpath(genpath('C:\Users\Thanos\Documents\DeepSolar'))
-cd C:\Users\Thanos\Documents\DeepSolar\BigData\sims
+cd C:\Users\Thanos\Documents\DeepSolar\BigData\sims\MESS_p-shave
 rmpath('C:\Users\Thanos\Documents\DeepSolar\Optimal_flow\cvx\lib\narginchk_')
 %% Laptop
 addpath(genpath('C:\Users\thano\OneDrive\Documents\USC'))
@@ -26,8 +26,6 @@ ind2 =  fix((nan_ind1(end)+96)/96)*96 ;
 Lt_ar1 = L_t_ar(1:ind1);
 Lt_ar2 = L_t_ar(ind2+1:end);
 L_t_ar = [Lt_ar1; Lt_ar2];
-%% 
-
 %%
 % for i_plot = 1:10
     % random integer to denote the day
