@@ -52,7 +52,8 @@ avg_cons_rep = repelem(avg_cons,4*time_step);
    hold on;
    % plot straight line to denote the peak consumption
    plot(500*ones(1,length(Lt_plot)))
-
+   hold on
+%    bar(Lt_day)
    set(gca, 'yGrid','on')
 %    title('Micro-grid daily consumption')
    ylabel('Consumption (kW)')

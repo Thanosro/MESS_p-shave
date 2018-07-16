@@ -63,7 +63,7 @@ mo_days = eomday(2017, 1:12);
 % total number of days 
 mo_days_tot = cumsum(mo_days);
 % total number of hours
-hours_tot = mo_days_tot*24
+hours_tot = mo_days_tot*24;
 %% monthly data
 Jan_data = micro_grid_array(1:hours_tot(1),:);  
 Feb_data = micro_grid_array(hours_tot(1)+1:hours_tot(2),:);
@@ -110,11 +110,11 @@ assert(month_norm_index >= 1 && month_norm_index <= 12,'Not valid month')
 % assert(micro_grid_index >= 1 && micro_grid_index <= 9,'Not valid micro-grid')
 figure(7)
 % plot(micro_grid_array(hr_ind_start:hr_ind_end,micro_grid_index))
-plot(monthly_norm_data.Feb(:,micro_grid_index))
+plot(monthly_norm_data.Sep(:,micro_grid_index))
 title(['Month ',num2str(month_norm_index), ' micro-grid: ',num2str(micro_grid_index)])
 ylabel('MW')
 xlabel('Days')
 xlim([0 31*24])
 ylim([-inf 1.05])
 xticks(0:4*24:31*24)
-xticklabels(0:4 :31 )
+xticklabels(0:4 :31)
