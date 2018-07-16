@@ -104,22 +104,17 @@ monthly_norm_data.Oct = Oct_data_norm;
 monthly_norm_data.Nov = Nov_data_norm;
 monthly_norm_data.Dec = Dec_data_norm;
 %% plot normalized data
-micro_grid_index = 9;
-month_norm_index = 4;
+micro_grid_index = 5;
+month_norm_index = 2;
 assert(month_norm_index >= 1 && month_norm_index <= 12,'Not valid month')
 % assert(micro_grid_index >= 1 && micro_grid_index <= 9,'Not valid micro-grid')
 figure(7)
 % plot(micro_grid_array(hr_ind_start:hr_ind_end,micro_grid_index))
-plot(May_data_norm(:,micro_grid_index))
+plot(monthly_norm_data.Feb(:,micro_grid_index))
 title(['Month ',num2str(month_norm_index), ' micro-grid: ',num2str(micro_grid_index)])
 ylabel('MW')
 xlabel('Days')
-xlim([0 no_days*24])
-ylim([-inf 1])
-xticks(0:4:24)
-xticklabels(0:4:24)
-
-
-
-
-% specify which month
+xlim([0 31*24])
+ylim([-inf 1.05])
+xticks(0:4*24:31*24)
+xticklabels(0:4 :31 )
