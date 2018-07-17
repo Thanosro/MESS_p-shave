@@ -1,5 +1,16 @@
-fig_count = 0;
+addpath(genpath('C:\Users\Thanos\Documents\DeepSolar'))
+cd C:\Users\Thanos\Documents\DeepSolar\BigData\sims\MESS_p-shave
+rmpath('C:\Users\Thanos\Documents\DeepSolar\Optimal_flow\cvx\lib\narginchk_')
+%% Laptop
+addpath(genpath('C:\Users\thano\OneDrive\Documents\USC'))
+cd C:\Users\thano\OneDrive\Documents\USC\DeepSolar\BigData\MESS_p-shave
+rmpath('C:\Users\thano\OneDrive\Documents\USC\DeepSolar\OPF\cvx\lib\narginchk_')
+%% ger data 
+micro_grid_index = 3;
+day_no =  5;
+Lt_day = 1000*monthly_norm_data.Mar((day_no-1)*24+1:day_no*24,micro_grid_index);
 %% variables
+fig_count = 0;
 % peak and normal price
 p_base = 0.05;
 p_peak = 12/30;
@@ -23,9 +34,6 @@ alpha = (1-DoD)/2;
 fig_count = fig_count + 1;
 % assert(alpha*E_cap <= E_init && E_init <= (1-alpha)*E_cap,'Init charge exceed MESS cap' )
 %%
-micro_grid_index = 8;
-day_no = 15;
-Lt_day = 1000*monthly_norm_data.Mar((day_no-1)*24+1:day_no*24,micro_grid_index);
 % plot(Lt_day)
 fig_count = fig_count + 1;
 % optimization problem 
@@ -40,7 +48,7 @@ variable b(Time_slots)
 variable max_var%(Time_slots)
 % variable per_shave
 % minimize p_elec*sum(Lt_day(:)-b(:)) + p_peak*max_var%max([(Lt_day(:)-b(:)-L_thres_ar(:))])
-minimize p_elec*sum(Lt_day(:)-b(:)) + p_peak*max_var%max([(Lt_day(:)-b(:)-L_thres_ar(:))])
+minimize p_base*sum(Lt_day(:)-b(:)) + p_peak*max_var%max([(Lt_day(:)-b(:)-L_thres_ar(:))])
 %  minimize sum(p_base*min(Lt_day(:)-b(:), L_thres_ar(:)) + p_peak*max(Lt_day(:)-b(:)-L_thres_ar(:),0) )
 % minimize sum(p_base*(Lt_day(:)-b(:)) + (p_peak-p_base)*max(Lt_day(:)-b(:)-L_thres_ar(:),0) )
 subject to 
@@ -74,8 +82,8 @@ figure(2343+fig_count)%+p_i+1)
    title(['P_{max} = ',num2str(P_max),' E_{cap}= ',num2str(E_cap), ' E_{init} = ',num2str(E_init)])
    hold on;
    plot(Lt_day-b,'r')
-   hold on
-   bar(-b)
+%    hold on
+%    bar(-b)
 %    hold on 
 %    bar(b_ch)
    set(gca, 'yGrid','on')
