@@ -26,7 +26,7 @@ assert(p_base<p_peak,'Peak price lower that base')
 % Energy capacity MWh
 E_cap = 500;
 % Depth of Discharge DoD
-DoD = 0.9;
+DoD = 0.5;
 alpha = (1-DoD)/2;
 fig_count = fig_count + 1;
 % energy initial storage
