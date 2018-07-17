@@ -4,7 +4,7 @@ clc; clear all; close all;
 %m , d # of days
 mg = 3; days =4;
 % # of MESS types
-NO_MESS_TYPES = 2;
+NO_MESS_TYPES = 4;
 base_reloc_cost =3;
 reloc_mat =tril(ones(mg));
 
@@ -48,9 +48,13 @@ redo = redo +1;
 G0.Edges.Labels = (1:numedges(G0))';
 G0.Edges.Capacities = ones(numedges(G0),1);
 %% the index for each edge for each MESS type is
-% MESS_NO = 1,2,3 for MESS number 1, 2, etc
-(0:days-1)*(mg*(mg+NO_MESS_TYPES)) + 1%MESS_NO
-
+for MESS_NO = 1:NO_MESS_TYPES% = 2;%,2,3 for MESS number 1, 2, etc
+% (0:days-1)*(mg*(mg+NO_MESS_TYPES)) + MESS_NO;
+    for mess_ind = MESS_NO : NO_MESS_TYPES :mg*NO_MESS_TYPES
+        (0:days-1)*(mg*(mg+NO_MESS_TYPES)) + mess_ind;
+        highlight(h1,'Edges',[ans],'EdgeColor','r','LineWidth',1.5)
+    end
+end
 %%
 figure(500)
 % fullscreen figure
