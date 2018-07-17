@@ -103,6 +103,8 @@ monthly_norm_data.Sep = Sep_data_norm;
 monthly_norm_data.Oct = Oct_data_norm;
 monthly_norm_data.Nov = Nov_data_norm;
 monthly_norm_data.Dec = Dec_data_norm;
+%%
+% save month_data.mat monthly_norm_data
 %% plot normalized data
 micro_grid_index = 5;
 month_norm_index = 2;
