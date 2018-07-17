@@ -21,3 +21,10 @@ E_cap = 6.74;
 P_max = 8;
 % Depth of Discharge DoD
 DoD = 0.9;
+%% RES mess http://www.res-group.com/media/342187/mobile_energystorage_161117.pdf
+% Energy capacity kWh
+E_cap = 1000;
+% Power Capacity kW
+P_max = 500;
+% Depth of Discharge DoD
+DoD = 0.9;
