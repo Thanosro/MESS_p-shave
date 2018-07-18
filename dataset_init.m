@@ -16,6 +16,8 @@ micro_grid_array = zeros(8760,length(micro_grids));
 for i_read = 1:length(micro_grids)
     micro_grid_array(:,i_read) = import_data(micro_grids(i_read),2,8761)';
 end
+%%
+micro_grid_array(:,end+1) = xlsread('HistoricalEMSHourlyLoad-2017.xlsx',1,'H2:H8761')';
 %% save filename with different name each time to avoid overwrite (with random number)
 save('micro_grid_data.mat',['micro_grid_array',num2str(randi(4000,1))])
 %% load data
@@ -104,7 +106,7 @@ monthly_norm_data.Oct = Oct_data_norm;
 monthly_norm_data.Nov = Nov_data_norm;
 monthly_norm_data.Dec = Dec_data_norm;
 %%
-% save month_data.mat monthly_norm_data
+save month_data.mat monthly_norm_data
 %% plot normalized data
 micro_grid_index = 5;
 month_norm_index = 2;

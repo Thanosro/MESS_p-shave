@@ -11,7 +11,9 @@ clear all; clc;
 load month_data.mat
 fig_count = 0;
 %% ger data 
-micro_grid_index = 1;
+micro_grid_index =  9;
+assert(micro_grid_index<10,'No of micro-grids is 10')
+disp('----------------------------------')
 for day_no = 13:22
 % start from 5th day
 % day_no = 13;
@@ -26,7 +28,7 @@ assert(p_base<p_peak,'Peak price lower that base')
 % Energy capacity MWh
 E_cap = 500;
 % Depth of Discharge DoD
-DoD = 0.5;
+DoD = 0.95;
 alpha = (1-DoD)/2;
 fig_count = fig_count + 1;
 % energy initial storage
