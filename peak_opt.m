@@ -11,7 +11,7 @@ clear all; clc;
 load month_data.mat
 fig_count = 0;
 %% ger data 
-micro_grid_index =  9;
+for MESS_model =  4
 assert(micro_grid_index<10,'No of micro-grids is 10')
 disp('----------------------------------')
 for day_no = 13:22
@@ -19,15 +19,18 @@ for day_no = 13:22
 % day_no = 13;
 % duration of  days
 day_dur =1;
-Lt_day = 1000*monthly_norm_data.Aug((day_no-1)*24:(day_no-1+day_dur)*24,micro_grid_index);
+% scaled to 1 MW
+Lt_day = monthly_norm_data.Aug((day_no-1)*24:(day_no-1+day_dur)*24,micro_grid_index);
 % variables -----------------------------------
 % peak and normal price
 p_base = 0.05;
 p_peak = 12/30;
 assert(p_base<p_peak,'Peak price lower that base')
 % Energy capacity MWh
-E_cap = 500;
+% E_cap = MESS_mat(1,MESS_model); %
+E_cap = 0.5;
 % Depth of Discharge DoD
+% DoD = MESS_mat(3,MESS_model);%
 DoD = 0.95;
 alpha = (1-DoD)/2;
 fig_count = fig_count + 1;
@@ -35,7 +38,8 @@ fig_count = fig_count + 1;
 E_init = alpha*E_cap ;
 % E_init = b(end);
 % Power Capacity MW
-P_max = 250;
+% P_max  = MESS_mat(2,MESS_model);
+P_max = 0.25;
 % Depth of Discharge DoD
 % DoD = 0.9;
 % Time resolution is the length of the load array 
@@ -108,7 +112,7 @@ figure(2343+fig_count)%+p_i+1)
 %    bar(b_ch)
    set(gca, 'yGrid','on')
 %    title('Micro-grid daily consumption')
-   ylabel('Consumption (kW)')
+   ylabel('Consumption (MW)')
 %    xlim([0 96])
 %    xticks(0:1:96)
 %    xticklabels(0:3:24)
@@ -130,6 +134,7 @@ plot(100*abs(cumsum(b))/E_cap)
 %    xticks(0:12:96)
 %    xticklabels(0:3:24)
    xlabel('Time (hours)')
+end
 end
 %% cost without battery
 cost_no_stor =  p_base*sum(Lt_day(:)) + p_peak*max(Lt_day(:));
