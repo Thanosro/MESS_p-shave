@@ -1,9 +1,10 @@
 % Generate graph for Optimal Scheduling of J types of K MESS in M
 % micro-grids in D days
 % mg = 3; 
-days =4;
+days =7; % number of days
 % # of MESS types
-NO_MESS_TYPES = 5;
+NO_MESS_TYPES = size(MESS_mat,2); % 5 types of MESS
+mg = 10;% 10 micro grids
 %% transfer cost matrix for variable mg
 base_reloc_cost =1;
 reloc_mat =tril(randi(4,mg));
@@ -12,7 +13,7 @@ reloc_mat =  base_reloc_cost*(reloc_mat+triu(reloc_mat',1));
 %% transfer cost matriix for fixed mg = 10
 % USC LAX UCLA UC Irv. Long Beach Port UC Riv. Disn. Cal-State LB CalTech
 % Univ. City
-mg = 10;
+% mg = 10;
 LA_dist = [0 15.0 13.2 43.2 26.9 59.7 28.7 26.5 13.7 10.4; %USC
            0 0.00 10.4 41.6 23.3 71.4 34.5 27.6 25.9 25.5; %LAX
            0 0.00 0.00 50.8 32.7 69.7 42.5 34.9 25.3 16.3; %UCLA

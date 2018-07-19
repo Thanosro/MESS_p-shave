@@ -10,18 +10,30 @@ clear all; clc;
 %%
 load month_data.mat
 fig_count = 0;
+%%
+mg = 10; %no of micro-grids
+days = 7; % no of days
+NO_MESS_TYPES = size(MESS_mat,2); % no of different mess types
+%% init matrix to store results
+cost_w_stor_mat = zeros(mg,NO_MESS_TYPES,days);
+cost_no_stor_mat = zeros(mg,NO_MESS_TYPES,days);
+ben_cost_mat = zeros(mg,NO_MESS_TYPES,days);
+%% load scale parameter
+MW_scale = 1; % how many MW's is the peak load
 %% ger data 
-micro_grid_index = 3;
-for MESS_model =  5
-assert(micro_grid_index<10,'No of micro-grids is 10')
+for micro_grid_index = 1:mg
+disp(['---------Micro-grid : ',num2str(micro_grid_index),'-------------------'])
+% total number of mess types is the size of size(MESS_mat,2)
+for MESS_model =  1:NO_MESS_TYPES
+% assert(micro_grid_index<10,'No of micro-grids is 10')
 disp(['------------MESS: ',num2str(MESS_model),'-------------------'])
-for day_no = 13:22
+for day_no = 1:days % duration of 1 week 
 % start from 5th day
-% day_no = 13;
+disp(['---Micro-grid : ',num2str(micro_grid_index),'|| MESS: ',num2str(MESS_model),'|| Day: ',num2str(day_no),'-------------------'])
 % duration of  days
 day_dur =1;
 % scaled to 1 MW
-Lt_day =monthly_norm_data.Aug((day_no-1)*24:(day_no-1+day_dur)*24,micro_grid_index);
+Lt_day =MW_scale*monthly_norm_data.Aug((day_no)*24:(day_no+day_dur)*24,micro_grid_index);
 % variables -----------------------------------
 % peak and normal price
 p_base = 47;%0.05%47; % $/MWh
@@ -100,44 +112,52 @@ disp(['Net gain is: ',num2str(ben_cost)])
 % percentage gain
 perc_gain = ben_cost/cost_no_stor;
 disp(['Percentage gain is: ',num2str(perc_gain)])
-%---------------------------
-fig_count = fig_count + 1;
-%-------------plot--------------------
-figure(2343+fig_count)%+p_i+1)
-   plot(Lt_day,'b')
-   title(['P_{max} = ',num2str(P_max),' E_{cap}= ',num2str(E_cap),...
-       ' E_{init} = ',num2str(E_init), ' Day = ',num2str(day_no-12)])
-   hold on;
-   plot(Lt_day-b,'r')
-%    hold on
-%    bar(-b)
-%    hold on 
-%    bar(b_ch)
-   set(gca, 'yGrid','on')
-%    title('Micro-grid daily consumption')
-   ylabel('Consumption (MW)')
-%    xlim([0 96])
-%    xticks(0:1:96)
-%    xticklabels(0:3:24)
-   xlabel(['Time (hours)',newline,'Percentage gain % is : ',num2str(100*perc_gain)])
-   legend('Load','Shaved','Location','Northwest')
-%    ------------------ plot battery level---------------
-fig_count = fig_count + 1;
-figure(2353+fig_count)
-%    plot(cumsum(b),'b')
-   hold on;
-plot(100*abs(cumsum(b))/E_cap)
-   hold on
-   title(['Charge percentage',' Day = ',num2str(day_no-12)])
-%    plot(Lt_day-b)
-   set(gca, 'yGrid','on')
-%    title('Micro-grid daily consumption')
-   ylabel('Charge (kW)')
-%    xlim([0 96])
-%    xticks(0:12:96)
-%    xticklabels(0:3:24)
-   xlabel('Time (hours)')
+for i_plot = 1:1
+    % %---------------------------
+    % fig_count = fig_count + 1;
+    %-------------plot--------------------
+    % figure(2343+fig_count)%+p_i+1)
+    %    plot(Lt_day,'b')
+    %    title(['P_{max} = ',num2str(P_max),' E_{cap}= ',num2str(E_cap),...
+    %        ' E_{init} = ',num2str(E_init), ' Day = ',num2str(day_no-12)])
+    %    hold on;
+    %    plot(Lt_day-b,'r')
+    % %    hold on
+    % %    bar(-b)
+    % %    hold on 
+    % %    bar(b_ch)
+    %    set(gca, 'yGrid','on')
+    % %    title('Micro-grid daily consumption')
+    %    ylabel('Consumption (MW)')
+    % %    xlim([0 96])
+    % %    xticks(0:1:96)
+    % %    xticklabels(0:3:24)
+    %    xlabel(['Time (hours)',newline,'Percentage gain % is : ',num2str(100*perc_gain)])
+    %    legend('Load','Shaved','Location','Northwest')
+    % %    ------------------ plot battery level---------------
+    % fig_count = fig_count + 1;
+    % figure(2353+fig_count)
+    % %    plot(cumsum(b),'b')
+    %    hold on;
+    % plot(100*abs(cumsum(b))/E_cap)
+    %    hold on
+    %    title(['Charge percentage',' Day = ',num2str(day_no-12)])
+    % %    plot(Lt_day-b)
+    %    set(gca, 'yGrid','on')
+    % %    title('Micro-grid daily consumption')
+    %    ylabel('Charge (kW)')
+    % %    xlim([0 96])
+    % %    xticks(0:12:96)
+    % %    xticklabels(0:3:24)
+    %    xlabel('Time (hours)')
 end
+    cost_w_stor_mat(micro_grid_index,MESS_model,day_no) = cost_w_stor;
+    cost_no_stor_mat(micro_grid_index,MESS_model,day_no) = cost_no_stor;
+    ben_cost_mat(micro_grid_index,MESS_model,day_no) = ben_cost;
+end
+disp(newline)
+end
+disp('$$$$ next microgrid $$$$$$')
 end
 %% cost without battery
 cost_no_stor =  p_base*sum(Lt_day(:)) + p_peak*max(Lt_day(:));

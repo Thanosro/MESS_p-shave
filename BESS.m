@@ -34,7 +34,7 @@ P_max = 500;
 % Depth of Discharge DoD
 DoD = 0.9;
 %% matrix with all the mess values DATA SCALED TO 0.5 MW
-MESS_scale_factor =1;
+MESS_scale_factor =1; % for 1 MW
 % samsung / canadian solar / freqon / BMZ / RES / 
 MESS_mat =     [3.60 0.8*7.2  6.00 6.74 6.5; % E_cap MWh
                 2.00 0.8*4.5  6.00 8.00 3.25 % P_max kW
