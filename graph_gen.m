@@ -1,11 +1,9 @@
-% plot graphs for figure 3 in paper
-% graph with node split
-% clc; clear all; close all;
-%m , d # of days
+% Generate graph for Optimal Scheduling of J types of K MESS in M
+% micro-grids in D days
 % mg = 3; 
 days =4;
 % # of MESS types
-NO_MESS_TYPES = 4;
+NO_MESS_TYPES = 5;
 %% transfer cost matrix for variable mg
 base_reloc_cost =1;
 reloc_mat =tril(randi(4,mg));
@@ -29,7 +27,7 @@ LA_dist =  LA_dist+LA_dist';
 % per mile cost for 2018
 % cost_per_mile = 0.01370*2018 - 25.94; for year 2018
 cost_per_mile = 1.7066;
-LA_cost = LA_dist*cost_per_mile+eye(10);
+LA_cost = LA_dist*cost_per_mile+0.1*eye(mg);
 %%
 % A0 = [eye(mg) zeros(mg);zeros(mg) reloc_mat];
 A0 = [eye(mg) zeros(mg);zeros(mg) LA_cost];
@@ -64,12 +62,17 @@ add_edge_table = table(add_edge_ind_rep,[ones(length(add_edge_ind_rep),1)],...
 G0 = addedge(G0,add_edge_table);
 redo = redo +1;
 %% add edges costs and capacities 
-% edge capacities are 1 except those of S* and T* with capacity equal to
-% the # of MESS
-% assign label nodes
 G0.Edges.Labels = (1:numedges(G0))';
 G0.Edges.Capacities = ones(numedges(G0),1);
+%---------------------------
+% costs from S and T are 0
+G0.Edges.Costs = G0.Edges.Weight;
+G0.Edges.Costs((numedges(G0)-2*mg+1):numedges(G0)) = 0;
+%-----------------------------
+% reloc costs to the same micro-grid are same
+G0.Edges.Costs(G0.Edges.Weight == 0.1) = 0;
 %% the index for each edge for each MESS type is
+tic % too long with for loops
 for MESS_NO = 1:NO_MESS_TYPES% = 2;%,2,3 for MESS number 1, 2, etc
 % (0:days-1)*(mg*(mg+NO_MESS_TYPES)) + MESS_NO;
     for mess_ind = MESS_NO : NO_MESS_TYPES :mg*NO_MESS_TYPES
@@ -77,11 +80,28 @@ for MESS_NO = 1:NO_MESS_TYPES% = 2;%,2,3 for MESS number 1, 2, etc
         highlight(h1,'Edges',[ans],'EdgeColor','r','LineWidth',1.5)
     end
 end
+toc
+%% indexing for each mg for each day for each MESS type
+MESS_NO = 5;
+mess_index_mat = zeros(NO_MESS_TYPES,mg,days);
+% mess_resh(:) = = reshape(mess_index_mat,[],1,1);
+mess_resh(:) = 1:length(mess_resh);
+% mess_index_mat = [MESS_NO:NO_MESS_TYPES:mg*NO_MESS_TYPES] 
+% highlight(h1,'Edges',mess_index_mat,'EdgeColor','r','LineWidth',1.5)
+%%
+% no of edges w/o the ones in S and T numedges(G0)-2*mg
+no_main_edges = numedges(G0)-2*mg;
+% mess_index_mat = 1:no_main_edges
+mess_index_mat = reshape(1:no_main_edges,mg*NO_MESS_TYPES,[])
+((mg*NO_MESS_TYPES+1):mg*mg:no_main_edges)
+% mess_index_mat = reshape(1:no_main_edges,mg*NO_MESS_TYPES,[]);
+% mess_index_mat = mess_index_mat(:,1:3:size(mess_index_mat,2))
+% MESS_NO:2*mg*NO_MESS_TYPES:no_main_edges
 %%
 figure(500)
 % fullscreen figure
 % figure('units','normalized','outerposition',[0 0 1 1])
-h1 =plot(G0,'EdgeLabel',G0.Edges.Weight);
+h1 =plot(G0,'EdgeLabel',G0.Edges.Labels);
 title('LA Micro-grids Case Study')
 layout(h1,'layered','Direction','right','Sources', 'S*','Sinks','T*')
 highlight(h1,'Edges',1:numedges(G0),'LineWidth',1.5)

@@ -11,37 +11,40 @@ clear all; clc;
 load month_data.mat
 fig_count = 0;
 %% ger data 
-for MESS_model =  4
+micro_grid_index = 3;
+for MESS_model =  5
 assert(micro_grid_index<10,'No of micro-grids is 10')
-disp('----------------------------------')
+disp(['------------MESS: ',num2str(MESS_model),'-------------------'])
 for day_no = 13:22
 % start from 5th day
 % day_no = 13;
 % duration of  days
 day_dur =1;
 % scaled to 1 MW
-Lt_day = monthly_norm_data.Aug((day_no-1)*24:(day_no-1+day_dur)*24,micro_grid_index);
+Lt_day =monthly_norm_data.Aug((day_no-1)*24:(day_no-1+day_dur)*24,micro_grid_index);
 % variables -----------------------------------
 % peak and normal price
-p_base = 0.05;
-p_peak = 12/30;
+p_base = 47;%0.05%47; % $/MWh
+p_peak = 12*1000/30; % $/kWh
 assert(p_base<p_peak,'Peak price lower that base')
 % Energy capacity MWh
-% E_cap = MESS_mat(1,MESS_model); %
-E_cap = 0.5;
+E_cap = MESS_mat(1,MESS_model); %
+% E_cap = 0.5;
 % Depth of Discharge DoD
 % DoD = MESS_mat(3,MESS_model);%
-DoD = 0.95;
+% DoD = 0.95;
+DoD = MESS_mat(3,MESS_model);
 alpha = (1-DoD)/2;
 fig_count = fig_count + 1;
 % energy initial storage
 E_init = alpha*E_cap ;
 % E_init = b(end);
 % Power Capacity MW
-% P_max  = MESS_mat(2,MESS_model);
-P_max = 0.25;
+P_max  = MESS_mat(2,MESS_model);
+% P_max = 0.25;
 % Depth of Discharge DoD
 % DoD = 0.9;
+
 % Time resolution is the length of the load array 
 Time_slots = size(Lt_day,1);
 % peak charge threshold in kW
