@@ -5,11 +5,13 @@ days =7; % number of days
 % # of MESS types
 NO_MESS_TYPES = size(MESS_mat,2); % 5 types of MESS
 mg = 10;% 10 micro grids
+%% contains cost benefits, mg days MESS_mat 
+load('10mg_5MESS_7days2.mat')
 %% transfer cost matrix for variable mg
-base_reloc_cost =1;
-reloc_mat =tril(randi(4,mg));
-reloc_mat = tril(reloc_mat);
-reloc_mat =  base_reloc_cost*(reloc_mat+triu(reloc_mat',1));
+%     base_reloc_cost =1;
+%     reloc_mat =tril(randi(4,mg));
+%     reloc_mat = tril(reloc_mat);
+%     reloc_mat =  base_reloc_cost*(reloc_mat+triu(reloc_mat',1));
 %% transfer cost matriix for fixed mg = 10
 % USC LAX UCLA UC Irv. Long Beach Port UC Riv. Disn. Cal-State LB CalTech
 % Univ. City
@@ -48,7 +50,7 @@ G0 = addedge(G0,Ed_S0);
 G0 = addedge(G0,Ed_T0);
 redo = 0;
 %% array with benefits / cost reductions from each mess
-ben_arr = 9:NO_MESS_TYPES-1+9
+    % ben_arr = 9:NO_MESS_TYPES-1+9
 %%
 % avoid to run code two times and add twice the no of edges
 assert(redo<1,'Code ran twice')
@@ -72,37 +74,54 @@ G0.Edges.Costs((numedges(G0)-2*mg+1):numedges(G0)) = 0;
 %-----------------------------
 % reloc costs to the same micro-grid are same
 G0.Edges.Costs(G0.Edges.Weight == 0.1) = 0;
+%% assign the benefit costs
+% find the costs that are equal to 1
+mg_MESS_indx = find(G0.Edges.Costs == 1);
+% reshape the index matrix to match the dims of the ben cost mat
+mg_MESS_indx_rshp = reshape(mg_MESS_indx,size(ben_cost_mat));
+% assign the values to the Go.Edges.Costs
+G0.Edges.Costs(mg_MESS_indx) = ben_cost_mat;
+length(mg_MESS_indx)
+%% 
+G0.Edges.Weight = G0.Edges.Costs;
 %% the index for each edge for each MESS type is
-tic % too long with for loops
-for MESS_NO = 1:NO_MESS_TYPES% = 2;%,2,3 for MESS number 1, 2, etc
-% (0:days-1)*(mg*(mg+NO_MESS_TYPES)) + MESS_NO;
-    for mess_ind = MESS_NO : NO_MESS_TYPES :mg*NO_MESS_TYPES
-        (0:days-1)*(mg*(mg+NO_MESS_TYPES)) + mess_ind;
-        highlight(h1,'Edges',[ans],'EdgeColor','r','LineWidth',1.5)
-    end
-end
-toc
+    % tic % too long with for loops
+    % for MESS_NO = 1:NO_MESS_TYPES% = 2;%,2,3 for MESS number 1, 2, etc
+    % % (0:days-1)*(mg*(mg+NO_MESS_TYPES)) + MESS_NO;
+    %     for mess_ind = MESS_NO : NO_MESS_TYPES :mg*NO_MESS_TYPES
+    %         (0:days-1)*(mg*(mg+NO_MESS_TYPES)) + mess_ind;
+    %         highlight(h1,'Edges',[ans],'EdgeColor','r','LineWidth',1.5)
+    %     end
+    % end
+    % toc
 %% indexing for each mg for each day for each MESS type
-MESS_NO = 5;
-mess_index_mat = zeros(NO_MESS_TYPES,mg,days);
-% mess_resh(:) = = reshape(mess_index_mat,[],1,1);
-mess_resh(:) = 1:length(mess_resh);
-% mess_index_mat = [MESS_NO:NO_MESS_TYPES:mg*NO_MESS_TYPES] 
-% highlight(h1,'Edges',mess_index_mat,'EdgeColor','r','LineWidth',1.5)
+    % MESS_NO = 5;
+    % mess_index_mat = zeros(NO_MESS_TYPES,mg,days);
+    % % mess_resh(:) = = reshape(mess_index_mat,[],1,1);
+    % mess_resh(:) = 1:length(mess_resh);
+    % % mess_index_mat = [MESS_NO:NO_MESS_TYPES:mg*NO_MESS_TYPES] 
+    % % highlight(h1,'Edges',mess_index_mat,'EdgeColor','r','LineWidth',1.5)
 %%
-% no of edges w/o the ones in S and T numedges(G0)-2*mg
-no_main_edges = numedges(G0)-2*mg;
-% mess_index_mat = 1:no_main_edges
-mess_index_mat = reshape(1:no_main_edges,mg*NO_MESS_TYPES,[])
-((mg*NO_MESS_TYPES+1):mg*mg:no_main_edges)
-% mess_index_mat = reshape(1:no_main_edges,mg*NO_MESS_TYPES,[]);
-% mess_index_mat = mess_index_mat(:,1:3:size(mess_index_mat,2))
-% MESS_NO:2*mg*NO_MESS_TYPES:no_main_edges
+%     % no of edges w/o the ones in S and T numedges(G0)-2*mg
+%     no_main_edges = numedges(G0)-2*mg;
+%     % mess_index_mat = 1:no_main_edges
+%     mess_index_mat = reshape(1:no_main_edges,mg*NO_MESS_TYPES,[])
+%     ((mg*NO_MESS_TYPES+1):mg*mg:no_main_edges)
+%     % mess_index_mat = reshape(1:no_main_edges,mg*NO_MESS_TYPES,[]);
+%     % mess_index_mat = mess_index_mat(:,1:3:size(mess_index_mat,2))
+%     % MESS_NO:2*mg*NO_MESS_TYPES:no_main_edges
+%% permute 3d array dimensions if needed
+%     ben_cost_mat_perm = permute(ben_cost_mat,[2 1 3]);
+%     size(ben_cost_mat_perm)
+%     cost_no_stor_mat_perm = permute(cost_no_stor_mat,[2 1 3]);
+%     size(cost_no_stor_mat_perm)
+%     cost_w_stor_mat_perm = permute(cost_w_stor_mat,[2 1 3]);
+%     size(cost_w_stor_mat_perm)
 %%
-figure(500)
+figure(503)
 % fullscreen figure
 % figure('units','normalized','outerposition',[0 0 1 1])
-h1 =plot(G0,'EdgeLabel',G0.Edges.Labels);
+h1 =plot(G0,'EdgeLabel',G0.Edges.Costs);
 title('LA Micro-grids Case Study')
 layout(h1,'layered','Direction','right','Sources', 'S*','Sinks','T*')
 highlight(h1,'Edges',1:numedges(G0),'LineWidth',1.5)

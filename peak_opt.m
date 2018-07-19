@@ -6,6 +6,7 @@ addpath(genpath('C:\Users\thano\OneDrive\Documents\USC'))
 cd C:\Users\thano\OneDrive\Documents\USC\DeepSolar\BigData\MESS_p-shave
 rmpath('C:\Users\thano\OneDrive\Documents\USC\DeepSolar\OPF\cvx\lib\narginchk_')
 %%
+% COMPUTES MINIMIZED COST FOR mg microgrids for each day for each MESS type
 clear all; clc;
 %%
 load month_data.mat
@@ -37,7 +38,7 @@ Lt_day =MW_scale*monthly_norm_data.Aug((day_no)*24:(day_no+day_dur)*24,micro_gri
 % variables -----------------------------------
 % peak and normal price
 p_base = 47;%0.05%47; % $/MWh
-p_peak = 12*1000/30; % $/kWh
+p_peak = 12*1000/30; % 12 $/kW
 assert(p_base<p_peak,'Peak price lower that base')
 % Energy capacity MWh
 E_cap = MESS_mat(1,MESS_model); %
