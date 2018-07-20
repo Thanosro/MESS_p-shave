@@ -30,7 +30,7 @@ LA_dist =  LA_dist+LA_dist';
 % per mile cost for 2018
 % cost_per_mile = 0.01370*2018 - 25.94; for year 2018
 cost_per_mile = 1.7066;
-LA_cost = LA_dist*cost_per_mile+0.1*eye(mg);
+LA_cost = 0.25*LA_dist*cost_per_mile+0.1*eye(mg);
 %%
 % A0 = [eye(mg) zeros(mg);zeros(mg) reloc_mat];
 A0 = [eye(mg) zeros(mg);zeros(mg) LA_cost];

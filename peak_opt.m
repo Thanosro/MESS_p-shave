@@ -31,8 +31,8 @@ disp(['------------MESS: ',num2str(MESS_model),'-------------------'])
 for day_no = 1:days % duration of 1 week 
 % start from 5th day
 disp(['---Micro-grid : ',num2str(micro_grid_index),'|| MESS: ',num2str(MESS_model),'|| Day: ',num2str(day_no),'-------------------'])
-% duration of  days
-day_dur =1;
+% duration of  days (step of how many consecutive days it is optimized)
+day_dur =2;
 % scaled to 1 MW
 Lt_day =MW_scale*monthly_norm_data.Aug((day_no)*24:(day_no+day_dur)*24,micro_grid_index);
 % variables -----------------------------------
@@ -117,24 +117,24 @@ for i_plot = 1:1
     % %---------------------------
     % fig_count = fig_count + 1;
     %-------------plot--------------------
-    % figure(2343+fig_count)%+p_i+1)
-    %    plot(Lt_day,'b')
-    %    title(['P_{max} = ',num2str(P_max),' E_{cap}= ',num2str(E_cap),...
-    %        ' E_{init} = ',num2str(E_init), ' Day = ',num2str(day_no-12)])
-    %    hold on;
-    %    plot(Lt_day-b,'r')
-    % %    hold on
-    % %    bar(-b)
-    % %    hold on 
-    % %    bar(b_ch)
-    %    set(gca, 'yGrid','on')
-    % %    title('Micro-grid daily consumption')
-    %    ylabel('Consumption (MW)')
-    % %    xlim([0 96])
-    % %    xticks(0:1:96)
-    % %    xticklabels(0:3:24)
-    %    xlabel(['Time (hours)',newline,'Percentage gain % is : ',num2str(100*perc_gain)])
-    %    legend('Load','Shaved','Location','Northwest')
+%     figure(2343+fig_count)%+p_i+1)
+%        plot(Lt_day,'b')
+%        title(['P_{max} = ',num2str(P_max),' E_{cap}= ',num2str(E_cap),...
+%            ' E_{init} = ',num2str(E_init), ' Day = ',num2str(day_no-12)])
+%        hold on;
+%        plot(Lt_day-b,'r')
+%     %    hold on
+%     %    bar(-b)
+%     %    hold on 
+%     %    bar(b_ch)
+%        set(gca, 'yGrid','on')
+%     %    title('Micro-grid daily consumption')
+%        ylabel('Consumption (MW)')
+%     %    xlim([0 96])
+%     %    xticks(0:1:96)
+%     %    xticklabels(0:3:24)
+%        xlabel(['Time (hours)',newline,'Percentage gain % is : ',num2str(100*perc_gain)])
+%        legend('Load','Shaved','Location','Northwest')
     % %    ------------------ plot battery level---------------
     % fig_count = fig_count + 1;
     % figure(2353+fig_count)
