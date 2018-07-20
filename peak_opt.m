@@ -32,7 +32,7 @@ for day_no = 1:days % duration of 1 week
 % start from 5th day
 disp(['---Micro-grid : ',num2str(micro_grid_index),'|| MESS: ',num2str(MESS_model),'|| Day: ',num2str(day_no),'-------------------'])
 % duration of  days (step of how many consecutive days it is optimized)
-day_dur =2;
+day_dur =1;
 % scaled to 1 MW
 Lt_day =MW_scale*monthly_norm_data.Aug((day_no)*24:(day_no+day_dur)*24,micro_grid_index);
 % variables -----------------------------------
