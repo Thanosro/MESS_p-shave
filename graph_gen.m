@@ -51,19 +51,19 @@ G0 = addedge(G0,Ed_T0);
 redo = 0;
 %% array with benefits / cost reductions from each mess
     % ben_arr = 9:NO_MESS_TYPES-1+9
-%%
-% avoid to run code two times and add twice the no of edges
-assert(redo<1,'Code ran twice')
-% reshape array to find the add nodes indices
-resh_1 = reshape(1:mg*days*2,mg,[]);
-% resh_1 = repmat(resh_1,NO_MESS_TYPES,1)
-% add_edge_ind = sort(reshape(resh_1',2,[])');
-add_edge_ind = reshape(resh_1',2,[])';
-add_edge_ind_rep = repelem(add_edge_ind,NO_MESS_TYPES-1,1);
-add_edge_table = table(add_edge_ind_rep,[ones(length(add_edge_ind_rep),1)],...
-    'VariableNames',{'EndNodes','Weight'});
-G0 = addedge(G0,add_edge_table);
-redo = redo +1;
+%% multiple edges 
+% % avoid to run code two times and add twice the no of edges
+% assert(redo<1,'Code ran twice')
+% % reshape array to find the add nodes indices
+% resh_1 = reshape(1:mg*days*2,mg,[]);
+% % resh_1 = repmat(resh_1,NO_MESS_TYPES,1)
+% % add_edge_ind = sort(reshape(resh_1',2,[])');
+% add_edge_ind = reshape(resh_1',2,[])';
+% add_edge_ind_rep = repelem(add_edge_ind,NO_MESS_TYPES-1,1);
+% add_edge_table = table(add_edge_ind_rep,[ones(length(add_edge_ind_rep),1)],...
+%     'VariableNames',{'EndNodes','Weight'});
+% G0 = addedge(G0,add_edge_table);
+% redo = redo +1;
 %% add edges costs and capacities 
 G0.Edges.Labels = (1:numedges(G0))';
 G0.Edges.Capacities = ones(numedges(G0),1);
@@ -74,14 +74,23 @@ G0.Edges.Costs((numedges(G0)-2*mg+1):numedges(G0)) = 0;
 %-----------------------------
 % reloc costs to the same micro-grid are same
 G0.Edges.Costs(G0.Edges.Weight == 0.1) = 0;
+mes_cnt = 0;
 %% assign the benefit costs
-% find the costs that are equal to 1
-mg_MESS_indx = find(G0.Edges.Costs == 1);
+MESS_TYPE = 5;
+if mes_cnt <1
+% find the costs that are equal to 1 
+    mg_MESS_indx = find(G0.Edges.Costs == 1);
+end
 % reshape the index matrix to match the dims of the ben cost mat
-mg_MESS_indx_rshp = reshape(mg_MESS_indx,size(ben_cost_mat));
+mg_MESS_indx_rshp = reshape(ben_cost_mat(:,MESS_TYPE,:),mg,[]);
 % assign the values to the Go.Edges.Costs
-G0.Edges.Costs(mg_MESS_indx) = ben_cost_mat;
+G0.Edges.Costs(mg_MESS_indx) = ben_cost_mat(:,MESS_TYPE,:);
 length(mg_MESS_indx)
+mes_cnt = mes_cnt+1;
+%%
+% reshape(ben_cost_mat(:,MESS_TYPE,:),mg,[])
+% reshape(mg_MESS_indx,mg,[])
+
 %% 
 G0.Edges.Weight = G0.Edges.Costs;
 %% the index for each edge for each MESS type is
@@ -118,11 +127,11 @@ G0.Edges.Weight = G0.Edges.Costs;
 %     cost_w_stor_mat_perm = permute(cost_w_stor_mat,[2 1 3]);
 %     size(cost_w_stor_mat_perm)
 %%
-figure(503)
+figure(511)
 % fullscreen figure
 % figure('units','normalized','outerposition',[0 0 1 1])
 h1 =plot(G0,'EdgeLabel',G0.Edges.Costs);
-title('LA Micro-grids Case Study')
+title(['LA Micro-grids Case Study',newline,'Mess Type ',num2str(MESS_TYPE)])
 layout(h1,'layered','Direction','right','Sources', 'S*','Sinks','T*')
 highlight(h1,'Edges',1:numedges(G0),'LineWidth',1.5)
 % highlight(h1,'Edges',findedge(G0,add_edge_ind(:,1),add_edge_ind(:,2)),'EdgeColor','r','LineWidth',1.5)
