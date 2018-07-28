@@ -30,7 +30,7 @@ LA_dist =  LA_dist+LA_dist';
 % per mile cost for 2018
 % cost_per_mile = 0.01370*2018 - 25.94; for year 2018
 cost_per_mile = 1.7066;
-LA_cost = 0.25*LA_dist*cost_per_mile+0.1*eye(mg);
+LA_cost = 1.33*LA_dist*cost_per_mile+0.1*eye(mg);
 %%
 % A0 = [eye(mg) zeros(mg);zeros(mg) reloc_mat];
 A0 = [eye(mg) zeros(mg);zeros(mg) LA_cost];
@@ -127,11 +127,12 @@ G0.Edges.Weight = G0.Edges.Costs;
 %     cost_w_stor_mat_perm = permute(cost_w_stor_mat,[2 1 3]);
 %     size(cost_w_stor_mat_perm)
 %%
-figure(511)
+figure(518)
 % fullscreen figure
 % figure('units','normalized','outerposition',[0 0 1 1])
 h1 =plot(G0,'EdgeLabel',G0.Edges.Costs);
-title(['LA Micro-grids Case Study',newline,'Mess Type ',num2str(MESS_TYPE)])
+% title(['LA Micro-grids Case Study',newline,'No of Mess ',num2str(NO_MESS_TYPES)])
+title(['LA Micro-grids Case Study: Min Cost Flow',newline,'No of Mess ',num2str(NO_MESS_TYPES)])
 layout(h1,'layered','Direction','right','Sources', 'S*','Sinks','T*')
 highlight(h1,'Edges',1:numedges(G0),'LineWidth',1.5)
 % highlight(h1,'Edges',findedge(G0,add_edge_ind(:,1),add_edge_ind(:,2)),'EdgeColor','r','LineWidth',1.5)

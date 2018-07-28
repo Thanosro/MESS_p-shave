@@ -20,3 +20,5 @@ else
     disp('Flow is not int')
 end
 highlight(h1,'Edges',find(fl>0),'EdgeColor','r','LineWidth',3.5)
+% title(['',newline,num2str(cost_v*fl)])
+xlabel(['Days',newline,num2str(cost_v*fl)])
