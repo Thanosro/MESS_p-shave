@@ -3,7 +3,8 @@
 % mg = 3; 
 days =7; % number of days
 % # of MESS types
-NO_MESS_TYPES = size(MESS_mat,2); % 5 types of MESS
+% NO_MESS_TYPES = 10;
+% size(MESS_mat,2); % 5 types of MESS
 mg = 10;% 10 micro grids
 %% contains cost benefits, mg days MESS_mat 
 load('10mg_5MESS_7days2.mat')
@@ -30,7 +31,8 @@ LA_dist =  LA_dist+LA_dist';
 % per mile cost for 2018
 % cost_per_mile = 0.01370*2018 - 25.94; for year 2018
 cost_per_mile = 1.7066;
-LA_cost = 1.33*LA_dist*cost_per_mile+0.1*eye(mg);
+reloc_factor = 0.75;
+LA_cost = reloc_factor*LA_dist*cost_per_mile+0.1*eye(mg);
 %%
 % A0 = [eye(mg) zeros(mg);zeros(mg) reloc_mat];
 A0 = [eye(mg) zeros(mg);zeros(mg) LA_cost];
@@ -127,19 +129,19 @@ G0.Edges.Weight = G0.Edges.Costs;
 %     cost_w_stor_mat_perm = permute(cost_w_stor_mat,[2 1 3]);
 %     size(cost_w_stor_mat_perm)
 %%
-figure(518)
-% fullscreen figure
-% figure('units','normalized','outerposition',[0 0 1 1])
-h1 =plot(G0,'EdgeLabel',G0.Edges.Costs);
-% title(['LA Micro-grids Case Study',newline,'No of Mess ',num2str(NO_MESS_TYPES)])
-title(['LA Micro-grids Case Study: Min Cost Flow',newline,'No of Mess ',num2str(NO_MESS_TYPES)])
-layout(h1,'layered','Direction','right','Sources', 'S*','Sinks','T*')
-highlight(h1,'Edges',1:numedges(G0),'LineWidth',1.5)
-% highlight(h1,'Edges',findedge(G0,add_edge_ind(:,1),add_edge_ind(:,2)),'EdgeColor','r','LineWidth',1.5)
-highlight(h1,1:numnodes(G0),'MarkerSize',4,'NodeColor','r')
-micro_names ={"USC" "LAX" "UCLA" 'UC Irv.' 'LB Port' 'UC Riv.' 'Disneyland'....
-    'Cal-State LB' 'CalTech' 'Univ. City'};
-set(gca, 'Ytick',1:mg,'YTickLabel',micro_names);
+% figure(518)
+% % fullscreen figure
+% % figure('units','normalized','outerposition',[0 0 1 1])
+% h1 =plot(G0,'EdgeLabel',G0.Edges.Costs);
+% % title(['LA Micro-grids Case Study',newline,'No of Mess ',num2str(NO_MESS_TYPES)])
+% title(['LA Micro-grids Case Study: Min Cost Flow',newline,'No of Mess ',num2str(NO_MESS_TYPES)])
+% layout(h1,'layered','Direction','right','Sources', 'S*','Sinks','T*')
+% highlight(h1,'Edges',1:numedges(G0),'LineWidth',1.5)
+% % highlight(h1,'Edges',findedge(G0,add_edge_ind(:,1),add_edge_ind(:,2)),'EdgeColor','r','LineWidth',1.5)
+% highlight(h1,1:numnodes(G0),'MarkerSize',4,'NodeColor','r')
+% micro_names ={"USC" "LAX" "UCLA" 'UC Irv.' 'LB Port' 'UC Riv.' 'Disneyland'....
+%     'Cal-State LB' 'CalTech' 'Univ. City'};
+% set(gca, 'Ytick',1:mg,'YTickLabel',micro_names);
 % test hightlight edges
 % highlight(h1,'Edges',[ans],'EdgeColor','r','LineWidth',1.5)
 % highlight(h1,'Edges',[1:NO_MESS_TYPES:6],'EdgeColor','r','LineWidth',1.5)

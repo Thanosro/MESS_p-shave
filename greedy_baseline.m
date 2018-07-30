@@ -32,6 +32,6 @@ suc_sh_pa;
 disp(['Total cost reduction with shortest paths is  ',num2str(sum(suc_sh_pa))])
 % disp(['Total cost  with shortest paths is  ',num2str(sum(suc_sh_pa)+Base_cost)])
 disp(newline)
-xlabel(['Days',newline,num2str(sum(suc_sh_pa))])%,'FontSize',10,'FontWeight','bold')
+xlabel(['Days',newline,'Benefit: ',num2str(abs(sum(suc_sh_pa)))])%,'FontSize',10,'FontWeight','bold')
 set(gca,'YTick',[])
 set(gca,'XTick',[])

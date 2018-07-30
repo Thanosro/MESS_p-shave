@@ -19,6 +19,6 @@ if sum(mod(fl,1)) == 0
 else
     disp('Flow is not int')
 end
-highlight(h1,'Edges',find(fl>0),'EdgeColor','r','LineWidth',3.5)
-% title(['',newline,num2str(cost_v*fl)])
-xlabel(['Days',newline,num2str(cost_v*fl)])
+% highlight(h1,'Edges',find(fl>0),'EdgeColor','r','LineWidth',3.5)
+% % title(['',newline,num2str(cost_v*fl)])
+% xlabel(['Days',newline,'Benefit: ',num2str(abs(cost_v*fl))])
