@@ -2,7 +2,7 @@
 Gs = G0;
 % MESS = 4;
 suc_sh_pa = zeros(1,NO_MESS_TYPES);
-figure(27)
+figure(207)
 % subplot(3,2,2*mess_counter)
 % h2 = plot(Gs,'EdgeLabel',Gs.Edges.Weight);
 h2 = plot(Gs);

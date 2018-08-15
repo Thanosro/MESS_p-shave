@@ -31,7 +31,7 @@ LA_dist =  LA_dist+LA_dist';
 % per mile cost for 2018
 % cost_per_mile = 0.01370*2018 - 25.94; for year 2018
 cost_per_mile = 1.7066;
-reloc_factor = 0.75;
+% reloc_factor = 0.2;
 LA_cost = reloc_factor*LA_dist*cost_per_mile+0.1*eye(mg);
 %%
 % A0 = [eye(mg) zeros(mg);zeros(mg) reloc_mat];
@@ -78,7 +78,7 @@ G0.Edges.Costs((numedges(G0)-2*mg+1):numedges(G0)) = 0;
 G0.Edges.Costs(G0.Edges.Weight == 0.1) = 0;
 mes_cnt = 0;
 %% assign the benefit costs
-MESS_TYPE = 5;
+MESS_TYPE = 3;
 if mes_cnt <1
 % find the costs that are equal to 1 
     mg_MESS_indx = find(G0.Edges.Costs == 1);
