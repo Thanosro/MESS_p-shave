@@ -87,7 +87,7 @@ end
 mg_MESS_indx_rshp = reshape(ben_cost_mat(:,MESS_TYPE,:),mg,[]);
 % assign the values to the Go.Edges.Costs
 G0.Edges.Costs(mg_MESS_indx) = ben_cost_mat(:,MESS_TYPE,:);
-length(mg_MESS_indx)
+% length(mg_MESS_indx)
 mes_cnt = mes_cnt+1;
 %%
 % reshape(ben_cost_mat(:,MESS_TYPE,:),mg,[])
