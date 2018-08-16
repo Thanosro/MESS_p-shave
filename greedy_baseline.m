@@ -1,21 +1,22 @@
 %% SHORTEST PATHS
 Gs = G0;
 % MESS = 4;
-suc_sh_pa = zeros(1,NO_MESS_TYPES);
-figure(207+loop_count)
+suc_sh_pa = zeros(1,NO_MESS);
+% figure(207+loop_count)
+figure(207)
 % subplot(3,2,2*mess_counter)
 % h2 = plot(Gs,'EdgeLabel',Gs.Edges.Weight);
 h2 = plot(Gs);
-title(['LA Micro-grids Case Study: Greedy',newline,'No of Mess ',num2str(NO_MESS_TYPES)...
+title(['LA Micro-grids Case Study: Greedy',newline,'No of Mess ',num2str(NO_MESS)...
     ,newline,'Dist. Fac: ',num2str(reloc_factor)])
 
 labelnode(h2,[1:numnodes(Gs)-2],'')
 layout(h2,'layered','Direction','right','Sources','S*','Sinks','T*')
-if NO_MESS_TYPES == 1
+if NO_MESS == 1
     title('Shortest Paths','FontSize',12,'FontWeight','bold')
 end
 disp('******* Shortest Paths Costs ***********')
-for i_rm = 1:NO_MESS_TYPES
+for i_rm = 1:NO_MESS
     [P_nodes,path_len,path1] = shortestpath(Gs,'S*','T*','Method','mixed');
 %     [P_nodes,path_len,path1] = shortestpath(Gs,'S*','T*');
     suc_sh_pa(i_rm) = path_len;

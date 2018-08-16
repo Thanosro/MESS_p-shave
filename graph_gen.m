@@ -8,6 +8,7 @@ days =7; % number of days
 mg = 10;% 10 micro grids
 %% contains cost benefits, mg days MESS_mat 
 load('10mg_5MESS_7days2.mat')
+% clear NO_MESS_TYPES
 %% transfer cost matrix for variable mg
 %     base_reloc_cost =1;
 %     reloc_mat =tril(randi(4,mg));
@@ -129,19 +130,24 @@ G0.Edges.Weight = G0.Edges.Costs;
 %     cost_w_stor_mat_perm = permute(cost_w_stor_mat,[2 1 3]);
 %     size(cost_w_stor_mat_perm)
 %%
-% figure(518)
-% % fullscreen figure
-% % figure('units','normalized','outerposition',[0 0 1 1])
+% figure(518+loop_count)
+figure(518)
+% fullscreen figure
+% figure('units','normalized','outerposition',[0 0 1 1])
+% plot graph with label -------------------------
 % h1 =plot(G0,'EdgeLabel',G0.Edges.Costs);
-% % title(['LA Micro-grids Case Study',newline,'No of Mess ',num2str(NO_MESS_TYPES)])
+% plot graph without label --------------------
+h1 = plot(G0);
+% title(['LA Micro-grids Case Study',newline,'No of Mess ',num2str(NO_MESS_TYPES)])
 % title(['LA Micro-grids Case Study: Min Cost Flow',newline,'No of Mess ',num2str(NO_MESS_TYPES)])
-% layout(h1,'layered','Direction','right','Sources', 'S*','Sinks','T*')
+layout(h1,'layered','Direction','right','Sources', 'S*','Sinks','T*')
 % highlight(h1,'Edges',1:numedges(G0),'LineWidth',1.5)
-% % highlight(h1,'Edges',findedge(G0,add_edge_ind(:,1),add_edge_ind(:,2)),'EdgeColor','r','LineWidth',1.5)
+% highlight(h1,'Edges',findedge(G0,add_edge_ind(:,1),add_edge_ind(:,2)),'EdgeColor','r','LineWidth',1.5)
 % highlight(h1,1:numnodes(G0),'MarkerSize',4,'NodeColor','r')
-% micro_names ={"USC" "LAX" "UCLA" 'UC Irv.' 'LB Port' 'UC Riv.' 'Disneyland'....
-%     'Cal-State LB' 'CalTech' 'Univ. City'};
-% set(gca, 'Ytick',1:mg,'YTickLabel',micro_names);
+micro_names ={"USC" "LAX" "UCLA" 'UC Irv.' 'LB Port' 'UC Riv.' 'Disneyland'....
+    'Cal-State LB' 'CalTech' 'Univ. City'};
+set(gca, 'Ytick',1:mg,'YTickLabel',micro_names);
+%----------------------------------------
 % test hightlight edges
 % highlight(h1,'Edges',[ans],'EdgeColor','r','LineWidth',1.5)
 % highlight(h1,'Edges',[1:NO_MESS_TYPES:6],'EdgeColor','r','LineWidth',1.5)
