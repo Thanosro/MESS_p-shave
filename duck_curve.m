@@ -26,7 +26,7 @@ load month_data.mat
 %%
 % Load scale to 1 MW factor
 MW_scale = 1;
-day_no = 25; % day of the month
+day_no = 15; % day of the month
 % solar scale to 0.8 MW
 Sol_scale = (0.7/max(solar_data((day_no),:)))*MW_scale;
 micro_grid_index = 4;
@@ -53,32 +53,32 @@ if any(Net_load <= 0) == 1
     disp('Solar generation > Load demand')
 end
 %%
-    time_init = 13;
-    time_fin = 19;
-    Lt_day2 = Lt_day(time_init:time_fin);
-    solar_day2 = solar_day(time_init:time_fin)
-    Net_load2 = Lt_day2-solar_day2';
-    plot(Net_load2)
-    %% check 
-    Net_load_dif = diff(Net_load);
-    [max_der, hour_max] = max(Net_load_dif)
-    % max ramp occurs between hour_max+1 and hour_max
-    % Net_load(hour_max+1)- Net_load(hour_max)
+%     time_init = 13;
+%     time_fin = 19;
+%     Lt_day2 = Lt_day(time_init:time_fin);
+%     solar_day2 = solar_day(time_init:time_fin)
+%     Net_load2 = Lt_day2-solar_day2';
+%     plot(Net_load2)
+%     %% check 
+%     Net_load_dif = diff(Net_load);
+%     [max_der, hour_max] = max(Net_load_dif)
+%     % max ramp occurs between hour_max+1 and hour_max
+%     % Net_load(hour_max+1)- Net_load(hour_max)
 %%
-% E_cap = 0.5897;
-% P_max = 0.7;
-P_max = 1;
+% E_cap = 0.52;
+% P_max = 0.52;
+P_max = 0.8;
 E_cap = 0.8;
 DoD = 0.9;
 alpha = (1-DoD)/2;
 E_init = alpha*E_cap;
 % E_init = 0
-dif_mat = diag(-1*ones(1,size(Net_load,1)-1),-1) + eye(size(Net_load,1));
+dif_mat = diag(-1*ones(1,size(Net_load,1)-3),-3) + eye(size(Net_load,1));
 %% check ramp specific times (i.e. between time_init and time_fin)
-    time_init = 13;
-    time_fin = 19;
-    dif_mat(1:time_init,:) = 0;
-    dif_mat(time_fin:end,:) = 0;
+%     time_init = 13;
+%     time_fin = 19;
+%     dif_mat(1:time_init,:) = 0;
+%     dif_mat(time_fin:end,:) = 0;
 %% 24 is HARD CODED change it if change the time period (from 1 pm to 7pm)
 tic
 cvx_begin % quiet
@@ -110,7 +110,7 @@ end
 toc
 
 %%
-figure(810)
+figure(810+randi(400,1))
 % hold on
 plot(Net_load)
 title(['Net Load: Load-Solar-MESS',newline,'E_{cap}= ',num2str(E_cap),...
