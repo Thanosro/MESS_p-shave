@@ -19,13 +19,14 @@ micro_grid_index = 4;
 Lt_day =MW_scale*monthly_norm_data.Jul((day_no)*24:(day_no+1)*24-1,micro_grid_index);
 % solar array for day_no (days are the rows in solar_data array)
 Sol_scale = (pen_per(i_pen)/max(solar_data((day_no),:)))*MW_scale;
+solar_day = Sol_scale*solar_data((day_no),:);
 % penetration with mean --------------------------
 % solar_day_init = solar_data((day_no),:);
 % Sol_scale1 = mean(solar_day_init(6:20))/mean(Lt_day);
 % Sol_scale = pen_per(i_pen)/Sol_scale1
 % solar_day = Sol_scale*solar_data((day_no),:);
 % ---------------------------
-solar_day = Sol_scale*solar_day_init;
+% solar_day = Sol_scale*solar_day_init;
 % Net load is load - solar
 Net_load = Lt_day-solar_day';
 plot(Net_load)
@@ -37,7 +38,7 @@ hold on
 % xticklabels(h_bar,{num2str(reloc_ind)})
 % title(['Gain percentage',newline,'No of MESS: ',num2str(NO_MESS)])
 end
-title('Duck Curve for Increase Solar Penetration')
+title('Duck Curve for Increasing Solar Penetration')
 set(gca,'YGrid','on')
 xlabel('Time (hours)')
 ylabel("Net Load (MW)")
@@ -46,4 +47,4 @@ title(h_leg,'% Penetration')
 xlim([1 24])
 legend(string(100*pen_per),'Location','southwest')
 %% change the name before resaving
-% print('duck_curve_pen','-depsc','-r300')
+% print('duck_curve_pen2','-depsc','-r300')
