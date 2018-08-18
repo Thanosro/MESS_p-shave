@@ -29,7 +29,7 @@ title(h_leg,'No of MESS')
 legend({num2str(no_mess_pl(1)),num2str(no_mess_pl(2)),num2str(no_mess_pl(3))},'Location','north')
 %%
 % print('bar_peak_shave','-dpng','-r0')
-print('bar_peak_shave','-depsc','-r300')
+print('bar_peak_shave2','-depsc','-r300')
 
 %%
 close all

@@ -1,4 +1,4 @@
-%% DUCK CURVE FIGURE for different solar penetration
+%% GEnerates DUCK CURVE FIGURE for different solar penetration
 load solar_data.mat
 disp(str2)
 %%

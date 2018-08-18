@@ -5,7 +5,7 @@ rmpath('C:\Users\Thanos\Documents\DeepSolar\Optimal_flow\cvx\lib\narginchk_')
 addpath(genpath('C:\Users\thano\OneDrive\Documents\USC'))
 cd C:\Users\thano\OneDrive\Documents\USC\DeepSolar\BigData\MESS_p-shave
 rmpath('C:\Users\thano\OneDrive\Documents\USC\DeepSolar\OPF\cvx\lib\narginchk_')
-%%
+%% GENERATES DAILY FIGURE FOR PEAK SHAVING
 % COMPUTES MINIMIZED COST FOR mg microgrids for each day for each MESS type
 clear all; clc;
 %%
@@ -32,7 +32,7 @@ micro_grid_index = 3;
 % for MESS_model =  1:NO_MESS_TYPES
 % assert(micro_grid_index<10,'No of micro-grids is 10')
 % disp(['------------MESS: ',num2str(MESS_model),'-------------------'])
-day_no = 15 % duration of 1 week 
+day_no = 15; % duration of 1 week 
 % start from 5th day
 % disp(['---Micro-grid : ',num2str(micro_grid_index),'|| MESS: ',num2str(MESS_model),'|| Day: ',num2str(day_no),'-------------------'])
 % duration of  days (step of how many consecutive days it is optimized)
@@ -139,7 +139,7 @@ title('Peak Load Shaving')
     %    xticks(0:1:96)
     %    xticklabels(0:3:24)
        xlabel(['Time (hours)'])%,newline,'Percentage gain % is : ',num2str(100*perc_gain)])
-       legend('No MESS','MESS','Location','Northwest')
+       legend('NO MESS','MESS','Location','Northwest')
     %    ------------------ plot battery level---------------
 %     fig_count = fig_count + 1;
 %     figure(2353)
@@ -166,7 +166,7 @@ disp(newline)
 disp('$$$$ next microgrid $$$$$$')
 % end
 %%
-print('peak_shave','-depsc','-r300')
+print('peak_shave_daily','-depsc','-r300')
 %% cost without battery
 cost_no_stor =  p_base*sum(Lt_day(:)) + p_peak*max(Lt_day(:));
 % cost with battery 
