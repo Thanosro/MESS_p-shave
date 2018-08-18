@@ -26,7 +26,7 @@ LA_dist =  LA_dist+LA_dist';
 % per mile cost for 2018
 % cost_per_mile = 0.01370*2018 - 25.94; for year 2018
 cost_per_mile = 1.7066;
-reloc_factor = 0.2;
+reloc_factor = 1;
 LA_cost = reloc_factor*LA_dist*cost_per_mile+0.1*eye(mg);
 %%
 % A0 = [eye(mg) zeros(mg);zeros(mg) reloc_mat];
@@ -68,9 +68,9 @@ figure(518)
 % fullscreen figure
 % figure('units','normalized','outerposition',[0 0 1 1])
 % plot graph with label -------------------------
-h1 =plot(Gd,'EdgeLabel',Gd.Edges.Costs);
+% h1 =plot(Gd,'EdgeLabel',Gd.Edges.Costs);
 % plot graph without label --------------------
-% h1 = plot(G0);
+h1 = plot(Gd);
 % title(['LA Micro-grids Case Study',newline,'No of Mess ',num2str(NO_MESS_TYPES)])
 % title(['LA Micro-grids Case Study: Min Cost Flow',newline,'No of Mess ',num2str(NO_MESS_TYPES)])
 layout(h1,'layered','Direction','right','Sources', 'S*','Sinks','T*')

@@ -1,5 +1,7 @@
 %% SHORTEST PATHS
-Gs = G0;
+% Gs = G0;
+%%
+Gs = Gd;
 % MESS = 4;
 suc_sh_pa = zeros(1,NO_MESS);
 % figure(207+loop_count)
