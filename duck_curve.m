@@ -1,3 +1,10 @@
+addpath(genpath('C:\Users\Thanos\Documents\DeepSolar'))
+cd C:\Users\Thanos\Documents\DeepSolar\BigData\sims\MESS_p-shave
+rmpath('C:\Users\Thanos\Documents\DeepSolar\Optimal_flow\cvx\lib\narginchk_')
+%% Laptop
+addpath(genpath('C:\Users\thano\OneDrive\Documents\USC'))
+cd C:\Users\thano\OneDrive\Documents\USC\DeepSolar\BigData\MESS_p-shave
+rmpath('C:\Users\thano\OneDrive\Documents\USC\DeepSolar\OPF\cvx\lib\narginchk_')
 %% read data file 
 full_excel_sheet = xlsread('2012_2013_Solar_home_electricity data_v44.xlsx');
 %% data preprocessing
@@ -28,7 +35,8 @@ load month_data.mat
 MW_scale = 1;
 day_no = 15; % day of the month
 % solar scale to 0.8 MW
-Sol_scale = (0.7/max(solar_data((day_no),:)))*MW_scale;
+Sol_scale = ([0 0.2 0.4 0.6 0.8]./max(solar_data((day_no),:)))*MW_scale;
+% Sol_scale = (mean(solar_data((day_no),:)))*MW_scale;
 micro_grid_index = 4;
 % load array for day_no for micro_grid_index
 Lt_day =MW_scale*monthly_norm_data.Jul((day_no)*24:(day_no+1)*24-1,micro_grid_index);
@@ -36,17 +44,18 @@ Lt_day =MW_scale*monthly_norm_data.Jul((day_no)*24:(day_no+1)*24-1,micro_grid_in
 solar_day = Sol_scale*solar_data((day_no),:);
 Net_load = Lt_day-solar_day';
 figure(600)
+% % hold on
+% plot(Lt_day)
+% title('Load')
 % hold on
-plot(Lt_day)
-title('Load')
-% hold on
-figure(601)
-plot(solar_day)
-title('Solar')
-figure(609+day_no)
-% hold on
+% figure(601)
+% plot(solar_day)
+% title('Solar')
+% figure(609+day_no)
+% % hold on
 plot(Net_load)
-title('Net Load: Load-Solar')
+hold on
+% title('Net Load: Load-Solar')
 % legend
 if any(Net_load <= 0) == 1
     disp('Net load has negative vale')
@@ -73,7 +82,7 @@ DoD = 0.9;
 alpha = (1-DoD)/2;
 E_init = alpha*E_cap;
 % E_init = 0
-dif_mat = diag(-1*ones(1,size(Net_load,1)-3),-3) + eye(size(Net_load,1));
+dif_mat = diag(-1*ones(1,size(Net_load,1)-1),-1) + eye(size(Net_load,1));
 %% check ramp specific times (i.e. between time_init and time_fin)
 %     time_init = 13;
 %     time_fin = 19;
@@ -113,11 +122,13 @@ toc
 figure(810+randi(400,1))
 % hold on
 plot(Net_load)
-title(['Net Load: Load-Solar-MESS',newline,'E_{cap}= ',num2str(E_cap),...
-    ' MWh P_{max}= ',num2str(P_max),' MW'])
+% title(['Net Load: Load-Solar-MESS',newline,'E_{cap}= ',num2str(E_cap),...
+%     ' MWh P_{max}= ',num2str(P_max),' MW'])
+title('Duck Curve Ramp Minimization')
 % ,newline,'Start time: '...
 %     ,num2str(time_init),' End time: ',num2str(time_fin)])
 hold on
+xlim([10 21])
 xlabel('Hours')
 ylabel('MW')
 plot(tot_load)
