@@ -9,8 +9,9 @@ figure(207)
 % subplot(3,2,2*mess_counter)
 % h2 = plot(Gs,'EdgeLabel',Gs.Edges.Weight);
 h2 = plot(Gs);
-title(['LA Micro-grids Case Study: Greedy',newline,'No of Mess ',num2str(NO_MESS)...
-    ,newline,'Dist. Fac: ',num2str(reloc_factor)])
+title(['LA Micro-grids Case Study: Greedy',newline,...
+    'No of Mess ',num2str(NO_MESS)...
+    'Dist. Fac: ',num2str(reloc_factor)])
 
 labelnode(h2,[1:numnodes(Gs)-2],'')
 layout(h2,'layered','Direction','right','Sources','S*','Sinks','T*')

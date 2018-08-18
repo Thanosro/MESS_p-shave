@@ -1,6 +1,6 @@
 % min cost flow for graph Gd for NO_MESS number of mess
 cost_v = Gd.Edges.Costs';
-NO_MESS = 6;
+% NO_MESS = 5;
 tic;
 cvx_begin quiet
 cvx_solver gurobi
