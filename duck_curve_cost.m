@@ -113,4 +113,7 @@ gain_duck(day_no,micro_grid_index) = cost_MESS-cost_no_MESS;
 % end
 % end
 %%
-save 10mg_7days_duck.mat gain_duck
+(max(diff(Net_load)) - max(diff(tot_load)))/ max(diff(Net_load))
+
+%%
+% % save 10mg_7days_duck.mat gain_duck

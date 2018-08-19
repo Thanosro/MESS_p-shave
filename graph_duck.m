@@ -26,7 +26,7 @@ LA_dist =  LA_dist+LA_dist';
 % per mile cost for 2018
 % cost_per_mile = 0.01370*2018 - 25.94; for year 2018
 cost_per_mile = 1.7066;
-% reloc_factor = 1;
+reloc_factor = 1;
 LA_cost = reloc_factor*LA_dist*cost_per_mile+0.1*eye(mg);
 %%
 % A0 = [eye(mg) zeros(mg);zeros(mg) reloc_mat];
@@ -62,6 +62,8 @@ Gd.Edges.Costs(Gd.Edges.Costs == 0.1) = 0;
 mes_cnt = 0;
 %% 
 Gd.Edges.Weight = Gd.Edges.Costs;
+%% ESS benefits for each micro-grid is the sum of each row of gain_duck matrix
+ESS_gain = sum(gain_duck,2);
 %%
 % figure(518+loop_count)
 figure(518)
