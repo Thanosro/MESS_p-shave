@@ -6,12 +6,12 @@ load month_data.mat
 %%
 % Load scale to 1 MW factor
 MW_scale = 1;
-day_no = 5; % day of the month
+day_no = 1; % day of the month
 assert(day_no<=30,'day > 30')
 % solar scale to 0.8 MW
 Sol_scale = (0.85/max(solar_data((day_no),:)))*MW_scale;
 % Sol_scale = (mean(solar_data((day_no),:)))*MW_scale;
-micro_grid_index = 4;
+micro_grid_index = 3;
 % load array for day_no for micro_grid_index
 Lt_day =MW_scale*monthly_norm_data.Jul((day_no)*24:(day_no+1)*24-1,micro_grid_index);
 % solar array for day_no (days are the rows in solar_data array)

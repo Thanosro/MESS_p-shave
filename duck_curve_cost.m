@@ -13,14 +13,14 @@ load month_data.mat
 MW_scale = 1;
 base_price = 10;
 peak_price = 40;
-for day_no = 1:7
-for micro_grid_index = 1:10
-% day_no = 5; % day of the month
+% for day_no = 1:7
+% for micro_grid_index = 1:10
+day_no = 13; % day of the month
 assert(day_no<=30,'day > 30')
 % solar scale to 0.8 MW
-Sol_scale = (0.85/max(solar_data((day_no),:)))*MW_scale;
+Sol_scale = (0.7/max(solar_data((day_no),:)))*MW_scale;
 % Sol_scale = (mean(solar_data((day_no),:)))*MW_scale;
-% micro_grid_index = 10;
+micro_grid_index = 10;
 assert(micro_grid_index<=10,'Invalid micro-grid index')
 % load array for day_no for micro_grid_index
 Lt_day =MW_scale*monthly_norm_data.Jul((day_no)*24:(day_no+1)*24-1,micro_grid_index);
@@ -85,23 +85,24 @@ if cvx_optval == Inf
 end
 toc
 %% generate duck curve figure
-%     figure(810+randi(400,1))
-%     % hold on
-%     plot(Net_load)
-%     % title(['Net Load: Load-Solar-MESS',newline,'E_{cap}= ',num2str(E_cap),...
-%     %     ' MWh P_{max}= ',num2str(P_max),' MW'])
-%     title('Duck Curve Ramp Minimization')
-%     % ,newline,'Start time: '...
-%     %     ,num2str(time_init),' End time: ',num2str(time_fin)])
-%     hold on
-%     xlim([10 21])
-%     xlabel('Hours')
-%     ylabel('Net Load (MW)')
-%     set(gca,'YGrid','on')
-%     % figure(34)
-%     plot(tot_load)
-%     legend('NO MESS','MESS','Location','Northwest')
-%% cost computation
+    figure(810+randi(400,1))
+    % hold on
+    plot(Net_load)
+    % title(['Net Load: Load-Solar-MESS',newline,'E_{cap}= ',num2str(E_cap),...
+    %     ' MWh P_{max}= ',num2str(P_max),' MW'])
+    title('Duck Curve Ramp Minimization')
+    % ,newline,'Start time: '...
+    %     ,num2str(time_init),' End time: ',num2str(time_fin)])
+    hold on
+    xlim([10 21])
+    ylim([0 1])
+    xlabel('Time (hours)')
+    ylabel('Net Load (MW)')
+    set(gca,'YGrid','on')
+    % figure(34)
+    plot(tot_load)
+    legend('NO MESS','MESS','Location','Northwest')
+% cost computation
 % tot_load is with MESS
 % Net_load is without MESS
 % power plant energy generation price base and peak plant
@@ -109,7 +110,7 @@ toc
 cost_no_MESS = base_price*min(Net_load)+sum(peak_price*(Net_load - min(Net_load)));
 cost_MESS = base_price*min(tot_load)+sum(peak_price*(tot_load - min(tot_load)));
 gain_duck(day_no,micro_grid_index) = cost_MESS-cost_no_MESS;
-end
-end
+% end
+% end
 %%
 save 10mg_7days_duck.mat gain_duck
