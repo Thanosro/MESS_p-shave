@@ -32,11 +32,11 @@ micro_grid_index = 3;
 % for MESS_model =  1:NO_MESS_TYPES
 % assert(micro_grid_index<10,'No of micro-grids is 10')
 % disp(['------------MESS: ',num2str(MESS_model),'-------------------'])
-day_no = 15; % duration of 1 week 
+day_no = 1; % duration of 1 week 
 % start from 5th day
 % disp(['---Micro-grid : ',num2str(micro_grid_index),'|| MESS: ',num2str(MESS_model),'|| Day: ',num2str(day_no),'-------------------'])
 % duration of  days (step of how many consecutive days it is optimized)
-day_dur =1;
+day_dur =3;
 % scaled to 1 MW
 Lt_day =MW_scale*monthly_norm_data.Aug((day_no)*24:(day_no+day_dur)*24,micro_grid_index);
 % variables -----------------------------------
@@ -121,7 +121,7 @@ disp(['Percentage gain is: ',num2str(perc_gain)])
     %---------------------------
 %     fig_count = fig_count + 1;
 %     -------------plot--------------------
-    figure(2343)
+    figure(2343+randi(400,1))
        plot(Lt_day,'b')
 %        title(['P_{max} = ',num2str(P_max),' E_{cap}= ',num2str(E_cap),...
 %            ' E_{init} = ',num2str(E_init), ' Day = ',num2str(day_no-12)])
@@ -136,6 +136,7 @@ title('Peak Load Shaving')
     %    title('Micro-grid daily consumption')
        ylabel('Consumption (MW)')
        ylim([0.5 1.03])
+       xlim([1 72])
     %    xticks(0:1:96)
     %    xticklabels(0:3:24)
        xlabel(['Time (hours)'])%,newline,'Percentage gain % is : ',num2str(100*perc_gain)])
@@ -166,7 +167,7 @@ disp(newline)
 disp('$$$$ next microgrid $$$$$$')
 % end
 %%
-print('peak_shave_daily','-depsc','-r300')
+print('peak_shave_daily3_days','-depsc','-r300')
 %% cost without battery
 cost_no_stor =  p_base*sum(Lt_day(:)) + p_peak*max(Lt_day(:));
 % cost with battery 
