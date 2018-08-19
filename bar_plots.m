@@ -9,13 +9,19 @@ load 10MESS_17rf_duck.mat
 reloc_array = linspace(1,5,17);
 %
 %% ESS benefits for each micro-grid is the sum of each row of gain_duck matrix
-NO_MESS = 8;
-ESS_gain = sum(gain_duck,2);
+
+load('10mg_7days_duck.mat')
+gain_duck_rsh = reshape(gain_duck,1,70);
+
+ESS_gain = sum(reshape(gain_duck_rsh',10,[]),2);
 % benefit of each ESS
+% NO_MESS = 8;
+for NO_MESS = 2:10;
 ESS_assign = maxk(abs(ESS_gain),NO_MESS);
 % total benefit of using ESS
-ESS_ben_mat = sum(ESS_assign)
-% perc_gain_mat(:,NO_MESS) = 
+ESS_ben = sum(ESS_assign);
+perc_gain_ESS(:,NO_MESS) = 100*((min_cost_mat(:,NO_MESS)-ESS_ben)/ESS_ben);
+end
 
 %%
 % number of mess in the plot
@@ -28,7 +34,9 @@ figure(2020+randi(400,1))
 % bar(reloc_ind,perc_gain_mat(reloc_ind*100,no_mess_pl));
 % ________________relocation index for duck curve________________
 reloc_ind = [1 1.5 2 2.5 3 3.5 4 4.5 5];
-bar(reloc_ind,perc_gain_mat(((reloc_ind-1)/0.25)+1,no_mess_pl));
+% bar(reloc_ind,perc_gain_mat(((reloc_ind-1)/0.25)+1,no_mess_pl));
+%__________________reloc index for ESS duck curve
+bar(reloc_ind,perc_gain_ESS(((reloc_ind-1)/0.25)+1,no_mess_pl));
 %_______________________________________________________
 set(gca, 'XTick', (reloc_ind))
 % set(gca,'YGrid','on','LineWidth',1.5)
@@ -39,17 +47,20 @@ set(gca,'YGrid','on')
 title(['Percentage Gain for Different Relocation Factors'])
 xlabel('Relocation Factor')
 ylabel("Percentage Gain (%)")
-ylim([0 inf])
+ylim([0 12.5])
 % xlim([0 200])
 h_leg = legend('show');
 title(h_leg,'No of MESS')
 % legend(num2str(no_mess_pl))
+% legend on;
 legend(string(no_mess_pl),'Location','north')
 % legend({num2str(no_mess_pl(1)),num2str(no_mess_pl(2)),num2str(no_mess_pl(3))},'Location','north')
 %%
 % print('bar_peak_shave','-dpng','-r0')
 % print('bar_peak_shave2','-depsc','-r300')
 %%
-print('bar_duck_curve','-depsc','-r300')
+% print('bar_duck_curve','-depsc','-r300')
+%%
+% print('bar_duck_curve_ESS','-depsc','-r300')
 %%
 close all

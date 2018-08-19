@@ -26,7 +26,7 @@ LA_dist =  LA_dist+LA_dist';
 % per mile cost for 2018
 % cost_per_mile = 0.01370*2018 - 25.94; for year 2018
 cost_per_mile = 1.7066;
-% reloc_factor = 1;
+reloc_factor = 1;
 LA_cost = reloc_factor*LA_dist*cost_per_mile+0.1*eye(mg);
 %%
 % A0 = [eye(mg) zeros(mg);zeros(mg) reloc_mat];
@@ -47,7 +47,7 @@ Gd = addedge(Gd,Ed_S0);
 Gd = addedge(Gd,Ed_T0);
 redo = 0;
 %% array with benefits / cost reductions from each mess
-% gain_duck_rsh = reshape(gain_duck,1,70);
+gain_duck_rsh = reshape(gain_duck,1,70);
 %% add edges costs and capacities 
 Gd.Edges.Labels = (1:numedges(Gd))';
 Gd.Edges.Capacities = ones(numedges(Gd),1);
@@ -57,12 +57,13 @@ Gd.Edges.Costs = Gd.Edges.Weight;
 Gd.Edges.Costs((numedges(Gd)-2*mg+1):numedges(Gd)) = 0;
 %% -----------------------------
 % assign the benefits to the edges
-cost_ar = reshape(find(Gd.Edges.Costs == 1),10,[]);
-Gd.Edges.Costs(cost_ar) = gain_duck';
+% cost_ar = reshape(find(Gd.Edges.Costs == 1),10,[]);
+% Gd.Edges.Costs(cost_ar) = gain_duck';
+% Gd.Edges.Costs(Gd.Edges.Costs == 0.1) = 0;
+% mes_cnt = 0;
+%% % ----------------- normal
+Gd.Edges.Costs(Gd.Edges.Costs == 1) = gain_duck_rsh';
 Gd.Edges.Costs(Gd.Edges.Costs == 0.1) = 0;
-mes_cnt = 0;
-% %% % -----------------test
-% Gd.Edges.Costs(Gd.Edges.Costs == 1) = gain_duck_rsh';
 %% 
 Gd.Edges.Weight = Gd.Edges.Costs;
 %% ESS benefits for each micro-grid is the sum of each row of gain_duck matrix
