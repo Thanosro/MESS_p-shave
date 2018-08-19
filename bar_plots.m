@@ -3,10 +3,20 @@ load 10MESS_200rf.mat
 disp(str_10MESS_200rf)
 %% reloc_array for peak shave
 reloc_array = linspace(0,2,201);
-%% reloc_array for duck curve
+%% reloc_array for duck curve vs greedy
 % load duck curve dataset
 load 10MESS_17rf_duck.mat
 reloc_array = linspace(1,5,17);
+%
+%% ESS benefits for each micro-grid is the sum of each row of gain_duck matrix
+NO_MESS = 8;
+ESS_gain = sum(gain_duck,2);
+% benefit of each ESS
+ESS_assign = maxk(abs(ESS_gain),NO_MESS);
+% total benefit of using ESS
+ESS_ben_mat = sum(ESS_assign)
+% perc_gain_mat(:,NO_MESS) = 
+
 %%
 % number of mess in the plot
 % no_mess_pl = 4:6;
@@ -17,7 +27,7 @@ figure(2020+randi(400,1))
 % reloc_ind = [0.15 0.35 0.75 1.0 1.35];
 % bar(reloc_ind,perc_gain_mat(reloc_ind*100,no_mess_pl));
 % ________________relocation index for duck curve________________
-reloc_ind = [1 1.5 2 2.5 3 3.5 4 4.5];
+reloc_ind = [1 1.5 2 2.5 3 3.5 4 4.5 5];
 bar(reloc_ind,perc_gain_mat(((reloc_ind-1)/0.25)+1,no_mess_pl));
 %_______________________________________________________
 set(gca, 'XTick', (reloc_ind))

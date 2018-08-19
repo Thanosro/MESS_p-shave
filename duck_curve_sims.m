@@ -44,9 +44,11 @@ str_10MESS_200rf = ['Contains data from simulations of MESS number',newline...
 %%
 % % % save 10MESS_200rf.mat perc_gain_mat greedy_mat min_cost_mat str_10MESS_200rf
 %%
-% % save 10MESS_17rf_duck.mat perc_gain_mat greedy_mat min_cost_mat
+% % save 10MESS_17rf_duck_correct.mat perc_gain_mat greedy_mat min_cost_mat
 %%
-load 10MESS_17rf_duck.mat
+% save 10MESS_17rf_duck_ESS.mat
+%%
+% load 10MESS_17rf_duck.mat
 % disp(str_10MESS_200rf)
 %%
 mesh(perc_gain_mat);  

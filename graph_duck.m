@@ -26,7 +26,7 @@ LA_dist =  LA_dist+LA_dist';
 % per mile cost for 2018
 % cost_per_mile = 0.01370*2018 - 25.94; for year 2018
 cost_per_mile = 1.7066;
-reloc_factor = 1;
+% reloc_factor = 1;
 LA_cost = reloc_factor*LA_dist*cost_per_mile+0.1*eye(mg);
 %%
 % A0 = [eye(mg) zeros(mg);zeros(mg) reloc_mat];
@@ -47,7 +47,7 @@ Gd = addedge(Gd,Ed_S0);
 Gd = addedge(Gd,Ed_T0);
 redo = 0;
 %% array with benefits / cost reductions from each mess
-gain_duck_rsh = reshape(gain_duck,1,70);
+% gain_duck_rsh = reshape(gain_duck,1,70);
 %% add edges costs and capacities 
 Gd.Edges.Labels = (1:numedges(Gd))';
 Gd.Edges.Capacities = ones(numedges(Gd),1);
@@ -55,11 +55,14 @@ Gd.Edges.Capacities = ones(numedges(Gd),1);
 % costs from S and T are 0
 Gd.Edges.Costs = Gd.Edges.Weight;
 Gd.Edges.Costs((numedges(Gd)-2*mg+1):numedges(Gd)) = 0;
-%-----------------------------
+%% -----------------------------
 % assign the benefits to the edges
-Gd.Edges.Costs(Gd.Edges.Costs == 1) = gain_duck_rsh';
+cost_ar = reshape(find(Gd.Edges.Costs == 1),10,[]);
+Gd.Edges.Costs(cost_ar) = gain_duck';
 Gd.Edges.Costs(Gd.Edges.Costs == 0.1) = 0;
 mes_cnt = 0;
+% %% % -----------------test
+% Gd.Edges.Costs(Gd.Edges.Costs == 1) = gain_duck_rsh';
 %% 
 Gd.Edges.Weight = Gd.Edges.Costs;
 %% ESS benefits for each micro-grid is the sum of each row of gain_duck matrix
@@ -71,13 +74,13 @@ figure(518)
 % fullscreen figure
 % figure('units','normalized','outerposition',[0 0 1 1])
 % plot graph with label -------------------------
-% h1 =plot(Gd,'EdgeLabel',Gd.Edges.Costs);
+h1 =plot(Gd,'EdgeLabel',Gd.Edges.Costs);
 % plot graph without label --------------------
-h1 = plot(Gd);
+% h1 = plot(Gd);
 % title(['LA Micro-grids Case Study',newline,'No of Mess ',num2str(NO_MESS_TYPES)])
 % title(['LA Micro-grids Case Study: Min Cost Flow',newline,'No of Mess ',num2str(NO_MESS_TYPES)])
 layout(h1,'layered','Direction','right','Sources', 'S*','Sinks','T*')
-% highlight(h1,'Edges',1:10,'EdgeColor','r')
+% highlight(h1,'Edges',test_ar(:,1),'EdgeColor','r')
 % highlight(h1,'Edges',findedge(G0,add_edge_ind(:,1),add_edge_ind(:,2)),'EdgeColor','r','LineWidth',1.5)
 % highlight(h1,1:numnodes(G0),'MarkerSize',4,'NodeColor','r')
 micro_names ={"USC" "LAX" "UCLA" 'UC Irv.' 'LB Port' 'UC Riv.' 'Disneyland'....
