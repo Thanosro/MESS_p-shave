@@ -64,6 +64,7 @@ mes_cnt = 0;
 Gd.Edges.Weight = Gd.Edges.Costs;
 %% ESS benefits for each micro-grid is the sum of each row of gain_duck matrix
 ESS_gain = sum(gain_duck,2);
+ESS_assign = maxk(abs(ESS_gain),NO_MESS);
 %%
 % figure(518+loop_count)
 figure(518)
