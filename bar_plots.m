@@ -39,7 +39,7 @@ set(gca,'YGrid','on')
 title(['Percentage Gain for Different Relocation Factors'])
 xlabel('Relocation Factor')
 ylabel("Percentage Gain (%)")
-ylim([0 12])
+ylim([0 inf])
 % xlim([0 200])
 h_leg = legend('show');
 title(h_leg,'No of MESS')
