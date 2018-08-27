@@ -1,6 +1,6 @@
-addpath(genpath('C:\Users\Thanos\Documents\DeepSolar'))
+addpath(genpath('C:\Users\Thanos\Documents'))
 cd C:\Users\Thanos\Documents\DeepSolar\BigData\sims\MESS_p-shave
-rmpath('C:\Users\Thanos\Documents\DeepSolar\Optimal_flow\cvx\lib\narginchk_')
+rmpath('C:\Users\Thanos\Documents\MATLAB\cvx\lib\narginchk_')
 %% Laptop
 addpath(genpath('C:\Users\thano\OneDrive\Documents\USC'))
 cd C:\Users\thano\OneDrive\Documents\USC\DeepSolar\BigData\MESS_p-shave
@@ -16,7 +16,7 @@ mg = 10; %no of micro-grids
 days = 7; % no of days
 % NO_MESS_TYPES = size(MESS_mat,2); % no of different mess types
 %%
-% NO_MESS_TYPES = 
+NO_MESS_TYPES = 3
 %% init matrix to store results
 cost_w_stor_mat = zeros(mg,NO_MESS_TYPES,days);
 cost_no_stor_mat = zeros(mg,NO_MESS_TYPES,days);
